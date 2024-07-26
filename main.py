@@ -198,23 +198,6 @@ def batched_translate(texts, batch_size=16, model=None, tokenizer=None, **kwargs
         results.extend(translate(texts2[i: i + batch_size], model=model, tokenizer=tokenizer, **kwargs))
     return [p for i, p in sorted(zip(idxs, results))]
 
-
-# Function to evaluate translations
-def evaluate_translations(df):
-    bleu_calc = sacrebleu.BLEU()
-    chrf_calc = sacrebleu.CHRF(word_order=2)
-    print
-    5
-    random
-    samples
-    print("hin_translated")
-    print(bleu_calc.corpus_score(df['hin_translated'].tolist(), [df['hin'].tolist()]))
-    print(chrf_calc.corpus_score(df['hin_translated'].tolist(), [df['hin'].tolist()]))
-    print("mun_translated")
-    print(bleu_calc.corpus_score(df['hne_translated'].tolist(), [df['hne'].tolist()]))
-    print(chrf_calc.corpus_score(df['hne_translated'].tolist(), [df['hne'].tolist()]))
-
-
 def evaluate_translations(df, num_samples=5):
 
     bleu_calc = sacrebleu.BLEU()
