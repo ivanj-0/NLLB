@@ -16,7 +16,7 @@ from sacremoses import MosesPunctNormalizer
 import sacrebleu
 import os
 
-BASE_SAVE_PATH = './models/'
+BASE_SAVE_PATH = './models_new/'
 
 # Function to set preferred encoding
 def set_encoding():
