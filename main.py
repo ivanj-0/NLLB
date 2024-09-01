@@ -16,7 +16,7 @@ from sacremoses import MosesPunctNormalizer
 import sacrebleu
 import os
 
-BASE_SAVE_PATH = './models_new/'
+BASE_SAVE_PATH = './models/'
 
 # Function to set preferred encoding
 def set_encoding():
@@ -28,10 +28,10 @@ def set_encoding():
 # Function to read data from file paths into DataFrames
 def read_data():
     paths = {
-        'train_hin': "train.hin_Deva",
+        'train_hin': "train1.hin_Deva",
         'dev_hin': "val.hin_Deva",
         'test_hin': "test.hin_Deva",
-        'train_mun': "train.mun_Deva",
+        'train_mun': "train1.mun_Deva",
         'dev_mun': "val.mun_Deva",
         'test_mun': "test.mun_Deva"
     }
@@ -83,8 +83,8 @@ replace_nonprint = get_non_printing_char_replacer(" ")
 
 # Function to initialize the model and tokenizer
 def initialize_model_and_tokenizer():
-    tokenizer = NllbTokenizer.from_pretrained('facebook/nllb-200-distilled-600M', legacy_behaviour=True)
-    model = AutoModelForSeq2SeqLM.from_pretrained('facebook/nllb-200-distilled-600M')
+    tokenizer = NllbTokenizer.from_pretrained('models_new/model_99999', legacy_behaviour=True)
+    model = AutoModelForSeq2SeqLM.from_pretrained('models_new/model_99999')
     model.cuda()
     return tokenizer, model
 
@@ -121,8 +121,8 @@ def get_batch_pairs(batch_size, data):
 
 
 # Function to train the model
-def train_model(model, tokenizer, df_train, optimizer, batch_size=16, max_length=128, warmup_steps=1000,
-                training_steps=100000):
+def train_model(model, tokenizer, df_train, optimizer, batch_size=16, max_length=128, warmup_steps=100,
+                training_steps=2500):
     scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=warmup_steps)
     losses = []
 
@@ -155,10 +155,10 @@ def train_model(model, tokenizer, df_train, optimizer, batch_size=16, max_length
             print('error', max(len(s) for s in xx + yy), e)
             continue
 
-        if i % 1000 == 0:
+        if i % 100 == 0:
             print(i, np.mean(losses[-1000:]))
 
-        if i % 1000 == 0 and i > 0:
+        if i % 100 == 0 and i > 0:
             save_path = create_model_save_path(i)
             model.save_pretrained(save_path)
             tokenizer.save_pretrained(save_path)
