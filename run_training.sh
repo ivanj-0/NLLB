@@ -1,17 +1,16 @@
 #!/bin/bash
 
 # Define variables
-CONDA_ENV="itv2"
 MODEL_PATH="nllb-200-distilled-600M/"
-RUN="V1_600M"
+RUN="V3_600M"
 BASE_SAVE_PATH="/mnt/disks/disk1/${RUN}/"
 LOG_FILE="${BASE_SAVE_PATH}${RUN}.log"
-TRAIN="train_data(V1).xlsx"
+TRAIN="train_data(V3).xlsx"
 DEV="validation_data.xlsx"
 TEST="test_data.xlsx"
 WARMUP_STEPS=1000
 TRAINING_STEPS=200_001
-EARLY_STOPPING_STEPS=2000
+EARLY_STOPPING_STEPS=20_000
 TOP_N_MODELS=40
 
 # Create the base save path directory if it doesn't exist
